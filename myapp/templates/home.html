@@ -101,6 +101,9 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     
+     {{ form.as_p }}
+
+     
     <label for="image" class="custom-file-input">Select Image</label>
     <input type="file" name="image" id="image" accept="image/*" required style="display:none;">
     
