@@ -1,38 +1,17 @@
-# views.py
-from django.shortcuts import render
-from .forms import ImageFramingForm
-from PIL import Image, ImageDraw, ImageFont
-from django.conf import settings
-import os
+from django.shortcuts import render, redirect
+from .forms import ImageTextForm
 
-def frame_image(request):
+def create_image_text(request):
     if request.method == 'POST':
-        form = ImageFramingForm(request.POST, request.FILES)
+        form = ImageTextForm(request.POST, request.FILES)
         if form.is_valid():
-            image = form.cleaned_data['image']
-            text = form.cleaned_data['text']
-
-            # Process the image and add text
-            framed_image = process_image(image, text)
-
-            # Save the framed image to a temporary location
-            temp_image_path = os.path.join(settings.MEDIA_ROOT, 'temp_framed_image.png')
-            framed_image.save(temp_image_path)
-
-            # Pass the temporary image path to the template
-            return render(request, 'your_template.html', {'framed_image_url': temp_image_path})
+            image_text = form.save()
+            return redirect('output_frame', pk=image_text.pk)
     else:
-        form = ImageFramingForm()
+        form = ImageTextForm()
 
-    return render(request, 'your_template.html', {'form': form})
+    return render(request, 'imagetext/create_image_text.html', {'form': form})
 
-def process_image(image, text):
-    # Open the image using PIL
-    img = Image.open(image)
-
-    # Add text to the image
-    draw = ImageDraw.Draw(img)
-    font = ImageFont.load_default()  # You can customize the font and size
-    draw.text((10, 10), text, font=font, fill=(255, 255, 255))  # Adjust the position as needed
-
-    return img
+def output_frame(request, pk):
+    image_text = ImageText.objects.get(pk=pk)
+    return render(request, 'imagetext/output_frame.html', {'image_text': image_text})

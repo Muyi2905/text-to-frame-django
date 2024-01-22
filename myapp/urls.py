@@ -1,6 +1,8 @@
+
 from django.urls import path
-from . import views 
+from .views import frame_image
 
 urlpatterns = [
-    path('', views.home, name ='home')
+    path('frame/', frame_image, name='frame_image'),
+    # Add other URL patterns as needed
 ]
