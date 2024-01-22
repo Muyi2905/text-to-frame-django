@@ -4,8 +4,8 @@ from django.conf import settings
 from PIL import Image, ImageDraw, ImageFont
 import os
 
-# def home(request):
-#     return render(request, 'home.html') 
+def home(request):
+    return render(request, 'home.html') 
 
 def home(request):
     if request.method == 'POST':
