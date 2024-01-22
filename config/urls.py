@@ -1,9 +1,7 @@
 from django.contrib import admin
-from django.urls import path, include
-from myapp import frame_image
+from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('myapp.urls')),
-    path('', frame_image, name='frame_image'),  # Include only if not in myapp.urls
+    path('imagetext/', include('imagetext.urls')),
 ]
