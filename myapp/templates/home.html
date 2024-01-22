@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image and Text Framing App</title>
+</head>
+<body>
+    <h1>Image and Text Framing App</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label for="image">Select Image:</label>
+        <input type="file" name="image" accept="image/*" required>
+        
+        <label for="text">Enter Text:</label>
+        <input type="text" name="text" required>
+        
+        <button type="submit">Create Frame</button>
+    </form>
+
+    {% if framed_image %}
+        <h2>Framed Image</h2>
+        <img src="{{ framed_image.url }}" alt="Framed Image">
+    {% endif %}
+
+    <footer>
+        <p>&copy; 2024 Image and Text Framing App</p>
+    </footer>
+</body>
+</html>
